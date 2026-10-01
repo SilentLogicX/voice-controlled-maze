@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maze Scoreboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app scoreboard-page">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">VOICE MAZE</p>
+        <h1>🏆 Scoreboard</h1>
+        <p class="subtitle">Best student performances saved on this device.</p>
+      </div>
+      <a class="score-link" href="index.html">← Back to Maze</a>
+    </header>
+
+    <section class="card board-card">
+      <div class="board-tools">
+        <h2>Student Results</h2>
+        <button id="clearBtn" class="danger">Clear Scores</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Student</th>
+              <th>Moves</th>
+              <th>Score</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="scoreRows"></tbody>
+        </table>
+      </div>
+      <p id="emptyMessage" class="empty hidden">No scores yet. Complete the maze to add a result.</p>
+    </section>
+  </main>
+  <script>
+    const rows = document.getElementById('scoreRows');
+    const empty = document.getElementById('emptyMessage');
+
+    function loadScores() {
+      const scores = JSON.parse(localStorage.getItem('voiceMazeScores') || '[]');
+      scores.sort((a, b) => b.score - a.score || a.moves - b.moves);
+
+      rows.innerHTML = '';
+      empty.classList.toggle('hidden', scores.length !== 0);
+
+      scores.forEach((s, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${i + 1}</td>
+          <td><strong>${escapeHTML(s.name)}</strong></td>
+          <td>${s.moves}</td>
+          <td><strong>${s.score}</strong></td>
+          <td>${escapeHTML(s.date)}</td>
+        `;
+        rows.appendChild(tr);
+      });
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, c => ({
+        '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;'
+      }[c]));
+    }
+
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      if (confirm('Clear all scoreboard results?')) {
+        localStorage.removeItem('voiceMazeScores');
+        loadScores();
+      }
+    });
+
+    loadScores();
+  </script>
+</body>
+</html>

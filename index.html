@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice-Controlled Maze</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">VOICE MAZE</p>
+        <h1>Voice-Controlled Maze</h1>
+        <p class="subtitle">Say <b>up</b>, <b>down</b>, <b>left</b>, or <b>right</b> to move.</p>
+      </div>
+      <a class="score-link" href="scoreboard.html">🏆 Scoreboard</a>
+    </header>
+
+    <section id="setup" class="card setup-card">
+      <h2>Start a Challenge</h2>
+      <label for="studentName">Student Name</label>
+      <input id="studentName" type="text" maxlength="30" placeholder="Enter your name" autocomplete="off">
+      <button id="startBtn" class="primary">Start Maze</button>
+      <p id="browserNote" class="note"></p>
+    </section>
+
+    <section id="game" class="game-layout hidden">
+      <div class="card maze-card">
+        <div class="game-head">
+          <div>
+            <span class="mini-label">PLAYER</span>
+            <strong id="playerName">Student</strong>
+          </div>
+          <div class="stats">
+            <div><span>Moves</span><b id="moves">0</b></div>
+            <div><span>Score</span><b id="score">100</b></div>
+          </div>
+        </div>
+
+        <div id="maze" class="maze" aria-label="Maze"></div>
+
+        <div class="voice-panel">
+          <button id="voiceBtn" class="voice-btn">
+            <span id="micIcon">🎙️</span>
+            <span id="voiceText">Start Voice Control</span>
+          </button>
+          <p id="heard" class="heard">Heard: —</p>
+          <p class="commands">Commands: <b>UP</b> · <b>DOWN</b> · <b>LEFT</b> · <b>RIGHT</b></p>
+        </div>
+
+        <div class="manual-controls">
+          <button data-dir="up">▲</button>
+          <div>
+            <button data-dir="left">◀</button>
+            <button data-dir="down">▼</button>
+            <button data-dir="right">▶</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card info-card">
+        <h2>How to Play</h2>
+        <ol>
+          <li>Enter the student's name.</li>
+          <li>Click <b>Start Voice Control</b>.</li>
+          <li>Say a direction clearly.</li>
+          <li>Reach the 🏁 finish without hitting walls.</li>
+        </ol>
+        <div class="legend">
+          <p>🟢 Start</p>
+          <p>🐯 Player</p>
+          <p>🏁 Finish</p>
+          <p>⬛ Wall</p>
+        </div>
+        <button id="restartBtn" class="secondary">Restart</button>
+      </aside>
+    </section>
+
+    <div id="winModal" class="modal hidden">
+      <div class="modal-box">
+        <div class="trophy">🏆</div>
+        <h2>Maze Complete!</h2>
+        <p id="resultText"></p>
+        <div class="result-actions">
+          <button id="playAgainBtn" class="primary">Play Again</button>
+          <a href="scoreboard.html" class="secondary link-btn">View Scoreboard</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
